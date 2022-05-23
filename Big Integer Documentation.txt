@@ -1,0 +1,21 @@
+> Constructor:
+
+    Array 'arr_number' is used to store the digits of the actual number.
+    the max value that each elements in the array can store is 10^19 -1 = 999999999999999999 or the biggest 18 digit number,
+    because the max value of lon long int is 9223372036854775807 i.e 19 digits.
+    During arithmetic on two 18 digit numbers, the result will be well within LLONG_MAX(max value of long long int)
+
+    thus a number 1234888888888888888888999999999999999999 is stored as
+    digits[2] = 999999999999999999  // last 18 digits
+    digits[1] = 888888888888888888 // next-last 18 digits
+    digits[0] = 1234 // reamaining digits
+
+    1234 - 888888888888888888 - 999999999999999999
+
+    len(arr_number) = 10
+    thus the max value it can store is 10 ^ (18 * 10 + 1) - 1 or (10*18) times 9
+    basically 10 elements holding 999999999999999999 each.
+
+    The result is returned as a string formed by joining the elements of the array 'arr_number'
+    arr_number = {0, 0, 0, 0, 0, 0, 0, 1234, 888888888888888888, 999999999999999999}
+    result = "1234888888888888888888999999999999999999"

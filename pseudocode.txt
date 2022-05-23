@@ -1,0 +1,88 @@
+class BigInteger
+{
+    constructor
+    {
+        convert "123499999999999999993333333333333333" to [1234, 9999999999999999, 3333333333333333]
+
+        if string == 0
+        {
+            skip/ return
+        } 
+        
+        index of the array arr_number to be filled is (size of array) - ((length of the string-1) % 18) - 1
+        
+        basically for a string:
+        string : .... ******************************************************
+        index :       |-----(sz-3)-----|------(sz-2)------|-----(sz-1)-----|
+        here sz = size of the array
+
+        OR for a string of length:
+        len: 0-18 :: index sz - 1 / last index of the array
+        len: 19-36 :: index sz - 2
+        len: 37-54 :: index sz - 3
+        .....
+        len: 163-180 :: index 0; as in this case this case, sz = 10
+
+
+        int next = len % 18; // number of digits to store in arr_number[idx]
+        if (next == 0) 
+        {
+            next = 18;
+        }
+
+        int lower = 0; // index of the string to be considered for splitting into substring
+
+        for (int i = idx; i < sz_arr_num; i++)
+        {
+            syntax of string.substring(): string substr (size_t pos, size_t len); 
+            pos: Position of the first character to be copied. 
+            len: Length of the sub-string. 
+
+            arr_number[i] = stoll(s.substr(lower, next));
+
+            lower = lower + next; // update the lower index
+
+            next = 18; // after the (len % 18) digits are stored, the default 'next' is 18
+        }
+    }
+
+    // overload the '+' operator
+    BigInteger operator+(BigInteger &b)
+    {
+        BigInteger result;
+        int carry = 0;
+
+        for (size_t i = 9; i >= 0; i--)
+        {
+            long long int sum = arr_number[i] + b.arr_number[i] + carry;
+            carry = sum / 1000000000000000000;
+            result.arr_number[i] = sum % 1000000000000000000;
+        }
+
+        cout << "Resultant number is ";
+        result.getNumber();
+
+        return result;
+    }
+
+    string getNumber()
+    {
+        string result = "";
+
+        for (int i = 0; i < 10; i++)
+        {
+            cout << arr_number[i] << " ";
+        }
+        cout << endl;
+
+        for (int i = 0; i < 10; i++)
+        {
+            if (arr_number[i] == 0) // skip if zero
+                continue;
+
+            result = result + to_string(arr_number[i]);
+        }
+
+        return result;
+    }
+};
